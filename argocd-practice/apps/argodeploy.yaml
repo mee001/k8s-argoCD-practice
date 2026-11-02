@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend-private-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mee001/k8s-argoCD-practice.git
+    targetRevision: HEAD
+    path: argocd-practice/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

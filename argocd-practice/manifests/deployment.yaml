@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-file-mount
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      imagePullSecrets:
+      - name: my-registry-secret
+      containers:
+      - name: frontend
+        image: dockmee001/my-private-app:v1
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config-vol
+          mountPath: /etc/config
+        - name: secret-vol
+          mountPath: /etc/secret
+      volumes:
+      - name: config-vol
+        configMap:
+          name: frontend-config
+      - name: secret-vol
+        secret:
+          secretName: frontend-secret
