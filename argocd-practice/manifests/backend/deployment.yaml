@@ -4,7 +4,7 @@ metadata:
   name: backend-file-mount
   namespace: test
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -25,6 +25,8 @@ spec:
           mountPath: /etc/config
         - name: secret-vol
           mountPath: /etc/secret
+        - name: data-vol
+          mountPath: /data
       volumes:
       - name: config-vol
         configMap:
@@ -32,3 +34,6 @@ spec:
       - name: secret-vol
         secret:
           secretName: frontend-secret
+      - name: data-vol
+        persistentVolumeClaim:
+          claimName: backend-pvc
