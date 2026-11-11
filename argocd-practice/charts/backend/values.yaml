@@ -24,3 +24,11 @@ ingress:
   pathType: Prefix
 
 resources: {}
+
+pvc:
+  enabled: true
+  name: backend-pvc
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  mountPath: /app/data
